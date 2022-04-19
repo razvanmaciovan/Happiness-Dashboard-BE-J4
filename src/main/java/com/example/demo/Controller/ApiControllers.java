@@ -16,13 +16,18 @@ public class ApiControllers {
     @GetMapping(value = "/")
     public String getPage(){
 
-        return "Haha Codez";
+        return "Haha Codez22";
 
     }
     @GetMapping(value = "/users")
     public List<User> getUsers(){
 
         return userRepo.findAll();
+    }
+
+    @GetMapping(value = "/login")
+    public void Register(User user){
+        userRepo.save(user);
     }
 
 }
