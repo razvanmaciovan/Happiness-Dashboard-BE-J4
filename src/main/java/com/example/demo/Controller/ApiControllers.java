@@ -4,6 +4,7 @@ import com.example.demo.Models.User;
 import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class ApiControllers {
         return userRepo.findAll();
     }
 
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/register")
     public void Register(User user){
         userRepo.save(user);
     }
