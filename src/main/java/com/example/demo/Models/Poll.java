@@ -1,11 +1,9 @@
 package com.example.demo.Models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Poll {
@@ -17,6 +15,13 @@ public class Poll {
     private Date dateOfCreation;
     private Date dateOfClosing;
 
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pollId", referencedColumnName = "id")
+    private List<Comment> comments;
+
+    @OneToMany(targetEntity = Rating.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pollId", referencedColumnName = "id")
+    private List<Rating> ratings;
 
     public String getTopic() {
         return topic;
