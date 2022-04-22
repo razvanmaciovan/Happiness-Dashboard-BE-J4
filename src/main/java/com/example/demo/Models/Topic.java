@@ -1,9 +1,7 @@
 package com.example.demo.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Topic {
@@ -13,6 +11,9 @@ public class Topic {
     private long id;
     private String name;
 
+    @OneToMany(targetEntity = Poll.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "topic_id" ,referencedColumnName = "id")
+    private List<Poll> polls;
     public String getName() {
         return name;
     }

@@ -1,6 +1,8 @@
 package com.example.demo.Models;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -9,6 +11,9 @@ public class User {
     private Long id;
     private String username;
     private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "users")
+    private Set<Team> teams = new HashSet<>();
 
     public String getUsername() {
         return username;

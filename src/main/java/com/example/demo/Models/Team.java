@@ -1,7 +1,8 @@
 package com.example.demo.Models;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Team {
@@ -10,9 +11,12 @@ public class Team {
     private long id;
     private String name;
 
-    @OneToMany(targetEntity = Team_User.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "teamId" , referencedColumnName = "id")
-    private List<User> users;
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(name = "team_user",
+    joinColumns = {@JoinColumn(name = "team_id")},
+    inverseJoinColumns = {@JoinColumn (name = "user_id")}
+    )
+    private Set<User> users = new HashSet<>();
 
 
     public String getName() {

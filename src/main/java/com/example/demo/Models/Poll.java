@@ -10,11 +10,10 @@ public class Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String topic;
+    private long topic_id;
     private boolean status;
     private Date dateOfCreation;
     private Date dateOfClosing;
-
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "pollId", referencedColumnName = "id")
     private List<Comment> comments;
@@ -23,12 +22,12 @@ public class Poll {
     @JoinColumn(name = "pollId", referencedColumnName = "id")
     private List<Rating> ratings;
 
-    public String getTopic() {
-        return topic;
+    public long getTopic_id() {
+        return topic_id;
     }
 
-    public void setTopic(String topic) {
-        this.topic = topic;
+    public void setTopic_id(long topic_id) {
+        this.topic_id = topic_id;
     }
 
     public boolean isStatus() {
