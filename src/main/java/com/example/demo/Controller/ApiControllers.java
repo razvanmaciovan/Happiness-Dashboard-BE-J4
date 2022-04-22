@@ -14,12 +14,7 @@ public class ApiControllers {
     @Autowired
     private UserRepo userRepo;
 
-    @GetMapping(value = "/")
-    public String getPage(){
 
-        return "Haha Codez22";
-
-    }
     @GetMapping(value = "/users")
     public List<User> getUsers(){
 
