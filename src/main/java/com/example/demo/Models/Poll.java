@@ -12,6 +12,7 @@ public class Poll {
     private long id;
     private long topic_id;
     private boolean status;
+    @Column(nullable = false)
     private Date dateOfCreation;
     private Date dateOfClosing;
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)

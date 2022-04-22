@@ -9,6 +9,7 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(nullable = false)
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
