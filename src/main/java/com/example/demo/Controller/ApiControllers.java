@@ -5,6 +5,8 @@ import com.example.demo.repo.UserRepo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,16 +25,12 @@ public class ApiControllers {
         return userRepo.findAll();
     }
 
-    /*
-     *  function: User getUserById(String id)
-     *
-     *  description:
-     *
-     */
-    @ApiOperation("Returns user by specified username")
-    @ApiParam("Username")
+    @Operation(
+        description =   "This function returns a user by a username given as input.\n\n" +
+                        "__Usage:__ localhost:8080/api/users/username"
+    )
     @GetMapping(value = "/users/{username}")
-    public User getUserById(@PathVariable String username) {
+    public User getUserByUsername(@PathVariable String username) {
 
         // get all users as a stream
         User user = getUsers().stream()
