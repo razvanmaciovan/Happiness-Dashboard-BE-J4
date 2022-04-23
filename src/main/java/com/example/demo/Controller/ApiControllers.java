@@ -18,13 +18,13 @@ public class ApiControllers {
 
 
     @GetMapping(value = "/users")
-    public List<User> getUsers(){
+    public List<User> getUsers() {
 
         return userRepo.findAll();
     }
 
     @PostMapping(value = "/register")
-    public void Register(User user){
+    public void Register(User user) {
         userRepo.save(user);
     }
 

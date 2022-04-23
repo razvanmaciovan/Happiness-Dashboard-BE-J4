@@ -12,12 +12,12 @@ public class Team {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "team_user",
-    joinColumns = {@JoinColumn(name = "team_id")},
-    inverseJoinColumns = {@JoinColumn (name = "user_id")}
+            joinColumns = {@JoinColumn(name = "team_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
-    private Set<User> users = new HashSet<>();
+    private final Set<User> users = new HashSet<>();
 
 
     public String getName() {

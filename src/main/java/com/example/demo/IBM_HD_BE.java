@@ -8,8 +8,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class IBM_HD_BE {
 
-	public static void main(String[] args) {
-		SpringApplication.run(IBM_HD_BE.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(IBM_HD_BE.class, args);
+    }
 
 }

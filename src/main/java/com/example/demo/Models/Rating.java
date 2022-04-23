@@ -1,7 +1,5 @@
 package com.example.demo.Models;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,8 +10,8 @@ public class Rating {
     private long id;
     private long pollId;
 
-    @OneToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId", referencedColumnName = "id",nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     private User user;
     private int grade;
 

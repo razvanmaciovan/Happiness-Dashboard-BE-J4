@@ -12,9 +12,10 @@ public class Topic {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(targetEntity = Poll.class,cascade = CascadeType.ALL)
-    @JoinColumn(name = "topic_id" ,referencedColumnName = "id")
+    @OneToMany(targetEntity = Poll.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "topic_id", referencedColumnName = "id")
     private List<Poll> polls;
+
     public String getName() {
         return name;
     }
