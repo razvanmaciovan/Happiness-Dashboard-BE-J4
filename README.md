@@ -6,6 +6,6 @@ Mercescu Ionut <br/>
 Rugescu Razvan <br/>
 Tenche Robert <br/>
 
-##Frontend info
+## Frontend info
 
 To access **Swagger** documentation go to `localhost:8080/swagger-ui/index.html`
