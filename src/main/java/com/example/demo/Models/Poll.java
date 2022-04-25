@@ -9,19 +9,22 @@ import java.util.List;
 public class Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private long topic_id;
-    private boolean status;
+    private Long id;
+    private Long topic_id;
+    private Boolean status;
     @Column(nullable = false)
     private Date dateOfCreation;
     private Date dateOfClosing;
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "pollId", referencedColumnName = "id")
     private List<Comment> comments;
-
     @OneToMany(targetEntity = Rating.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "pollId", referencedColumnName = "id")
     private List<Rating> ratings;
+
+    public Boolean getStatus() {
+        return status;
+    }
 
     public long getTopic_id() {
         return topic_id;
