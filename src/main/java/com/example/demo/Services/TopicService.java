@@ -22,7 +22,7 @@ public class TopicService {
     /* Returns a Topic from DB */
     public Optional<Topic> getTopic(Long id) {
         // We return an Optional containing the Topic if we find one with the given ID or an Empty one.
-        return Optional.of(topicRepo.getById(id));
+        return topicRepo.findById(id);
     }
 
     /* Returns a List of Topics from the DB */

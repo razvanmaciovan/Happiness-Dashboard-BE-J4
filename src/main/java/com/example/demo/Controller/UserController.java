@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.http.HttpStatus.*;
+
 @RestController
 @RequestMapping("/api/user")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -50,15 +52,15 @@ public class UserController {
                     responseCode = "200",
                     description = "User was found end returned successfully!"),
             @ApiResponse(
-                    responseCode = "204",
+                    responseCode = "404",
                     description = "User with given username was not found!")
     })
     @GetMapping(path = "/users/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
         Optional<User> foundUser = userService.getUserByUsername(username);
         return foundUser
-                .map(user -> new ResponseEntity<>(user, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
+                .map(user -> new ResponseEntity<>(user, OK))
+                .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
     }
 
     @Operation(
@@ -93,8 +95,8 @@ public class UserController {
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
         Optional<User> updatedUser = userService.updateUser(id, user);
         return updatedUser
-                .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .map(value -> new ResponseEntity<>(value, OK))
+                .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
     }
 
     @Operation(
@@ -114,8 +116,8 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         boolean userWasDeleted = userService.deleteUser(id);
         if (userWasDeleted)
-            return new ResponseEntity<>("User with id " + id + " was successfully deleted!", HttpStatus.OK);
-        return new ResponseEntity<>("No user was found with the given id!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User with id " + id + " was successfully deleted!", OK);
+        return new ResponseEntity<>("No user was found with the given id!", NOT_FOUND);
     }
 
 }

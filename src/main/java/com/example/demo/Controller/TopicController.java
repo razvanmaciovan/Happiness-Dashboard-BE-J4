@@ -40,13 +40,13 @@ public class TopicController {
                     responseCode = "404",
                     description = "No topic with such ID!")
     })
-    @GetMapping(path = "/get/{id}", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/get/{id}")
     public ResponseEntity<Topic> getTopic(@PathVariable Long id) {
         Optional<Topic> foundTopic = topicService.getTopic(id);
         return foundTopic
                 // if the Optional is not empty we map it to an ResponseEntity and return it
                 .map(topic -> new ResponseEntity<>(topic, OK))
-                .orElseGet(() -> new ResponseEntity<>(null, NOT_FOUND)); // else we return this one
+                .orElseGet(() -> new ResponseEntity<>(NOT_FOUND)); // else we return this one
     }
 
     @Operation(
