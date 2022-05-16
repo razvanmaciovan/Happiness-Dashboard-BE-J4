@@ -6,6 +6,7 @@ import javax.persistence.*;
 public class Rating {
 
     @Id
+
     @GeneratedValue
     private long id;
     private long pollId;
@@ -13,8 +14,11 @@ public class Rating {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     private User user;
+
+    @Column
     private int grade;
 
+    //Timestamp to add.
 
     public long getPollId() {
         return pollId;
