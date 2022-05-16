@@ -1,6 +1,7 @@
 package com.example.demo.Models;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Rating {
@@ -18,7 +19,7 @@ public class Rating {
     @Column
     private int grade;
 
-    //Timestamp to add.
+    private Date timeStamp;
 
     public long getPollId() {
         return pollId;

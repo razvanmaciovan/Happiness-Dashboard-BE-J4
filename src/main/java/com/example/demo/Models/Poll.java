@@ -11,6 +11,7 @@ public class Poll {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long topic_id;
+    private String title;
     private Boolean status;
     @Column(nullable = false)
     private Date dateOfCreation;
