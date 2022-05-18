@@ -29,7 +29,7 @@ public class PollController {
     @Operation(
             summary = "Gets an Poll!",
             description = "This function returns an Poll with the given ID from database.\n\n" +
-                    "__Usage:__ localhost:8080/api/poll/get/id"
+                    "__Usage:__ localhost:8080/api/poll/{id}"
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -39,7 +39,7 @@ public class PollController {
                     responseCode = "404",
                     description = "No Poll with such ID!")
     })
-    @GetMapping(path = "/get/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<Poll> getPoll(@PathVariable Long id) {
         Optional<Poll> foundPoll = pollService.getPoll(id);
         return foundPoll
@@ -50,14 +50,14 @@ public class PollController {
     @Operation(
             summary = "Gets all Polls!",
             description = "This function returns all Polls from database.\n\n" +
-                    "__Usage:__ localhost:8080/api/poll/get/all"
+                    "__Usage:__ localhost:8080/api/poll"
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
                     description = "All polls were found and returned successfully!")
     })
-    @GetMapping(path = "/get/all")
+    @GetMapping()
     @ResponseStatus(value = OK)
     public List<Poll> getAllPolls() {
         return pollService.getAll();
@@ -66,14 +66,14 @@ public class PollController {
     @Operation(
             summary = "Adds an Poll!",
             description = "This function adds an Poll in the database.\n\n" +
-                    "__Usage:__ localhost:8080/api/poll/add"
+                    "__Usage:__ localhost:8080/api/poll"
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
                     description = "Poll was added successfully!")
     })
-    @PostMapping(path = "/add")
+    @PostMapping()
     public ResponseEntity<String> addPoll(@RequestBody Poll poll) {
         pollService.addPoll(poll);
         return new ResponseEntity<>("Poll successfully added!", CREATED);
@@ -103,7 +103,7 @@ public class PollController {
     @Operation(
             summary = "Updates an Poll!",
             description = "This function updates an Poll credentials with the given ID from the database.\n\n" +
-                    "__Usage:__ localhost:8080/api/poll/update/id"
+                    "__Usage:__ localhost:8080/api/poll/id"
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -113,12 +113,31 @@ public class PollController {
                     responseCode = "404",
                     description = "No Polls were found with the given ID!")
     })
-    @PutMapping(path = "/update/{id}")
+    @PutMapping(path = "/{id}")
     public ResponseEntity<Poll> updatePoll(@PathVariable Long id, @RequestBody Poll poll) {
         Optional<Poll> updatedPoll = pollService.updatePoll(id, poll);
         return updatedPoll
                 .map(value -> new ResponseEntity<>(value, OK))
                 .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
+    }
+
+    @Operation(
+            summary = "Gets the most recent N public polls!",
+            description = "This function returns a list with the most recent N public polls.\n\n" +
+                    "__Usage:__ localhost:8080/api/poll/last/{amount}"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "The list was successfully returned!"),
+            @ApiResponse(
+                    responseCode = "418",
+                    description = "Something went horribly wrong u TEAPOT!")
+    })
+    @GetMapping(path = "/last/{amount}")
+    public ResponseEntity<List<Poll>> getLastPolls(@PathVariable int amount) {
+        if (amount <= 0) return new ResponseEntity<>(null, I_AM_A_TEAPOT);
+        return new ResponseEntity<>(pollService.getMostRecentPolls(amount), OK);
     }
 
 }

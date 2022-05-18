@@ -61,4 +61,8 @@ public class PollService {
         originalPoll.setDateOfClosing(newPoll.getDateOfClosing());
         originalPoll.setStatus(newPoll.getStatus());
     }
+
+    public List<Poll> getMostRecentPolls(int amount) {
+        return pollRepo.findAllByOrderByIdDesc(amount);
+    }
 }
