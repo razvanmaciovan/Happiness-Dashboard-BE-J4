@@ -67,4 +67,15 @@ public class Poll {
         this.title = title;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
 }

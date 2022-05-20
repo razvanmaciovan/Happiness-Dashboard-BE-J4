@@ -10,7 +10,6 @@ public class Topic {
     private Long id;
     @Column(nullable = false)
     private String name;
-
     @OneToMany(targetEntity = Poll.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "topic_id", referencedColumnName = "id")
     private List<Poll> polls;
