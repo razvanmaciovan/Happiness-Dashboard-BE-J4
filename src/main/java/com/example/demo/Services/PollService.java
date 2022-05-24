@@ -1,6 +1,7 @@
 package com.example.demo.Services;
 
 import com.example.demo.Models.Poll;
+import com.example.demo.Models.Topic;
 import com.example.demo.repo.PollRepo;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,12 @@ import java.util.Optional;
 public class PollService {
 
     private final PollRepo pollRepo;
+    private TopicService topicService;
 
     @Autowired
-    public PollService(PollRepo pollRepo) {
+    public PollService(PollRepo pollRepo, TopicService topicService) {
         this.pollRepo = pollRepo;
+        this.topicService = topicService;
     }
 
     /* Returns a List of Polls from the DB */
@@ -26,7 +29,15 @@ public class PollService {
 
     /* Returns an Optional containing the found Poll with the given ID or an Empty one */
     public Optional<Poll> getPoll(Long id) {
-        return pollRepo.findById(id);
+        Optional<Poll> poll = pollRepo.findById(id);
+
+        Topic topic = topicService.getTopic(poll.get().getTopic_id()).get();
+
+        System.out.println(topic.getName());
+
+        poll.get().setTopicName(topic.getName());
+
+        return poll;
     }
 
     /* Adds a Poll to the DB */
@@ -56,10 +67,7 @@ public class PollService {
 
     /* Helper Method that updates a Poll */
     private void updatePollInfo(@NotNull Poll originalPoll, @NotNull Poll newPoll) {
-        originalPoll.setTopic_id(newPoll.getTopic_id());
-        originalPoll.setDateOfCreation(newPoll.getDateOfCreation());
-        originalPoll.setDateOfClosing(newPoll.getDateOfClosing());
-        originalPoll.setStatus(newPoll.getStatus());
+        originalPoll.copyFrom(newPoll);
     }
 
     public List<Poll> getMostRecentPolls(int amount) {

@@ -1,15 +1,27 @@
 package com.example.demo.Models;
 
 
+import com.example.demo.Services.TopicService;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 public class Poll {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    public Long getTopic_id() {
+        return topic_id;
+    }
+
+    public void setTopic_id(Long topic_id) {
+        this.topic_id = topic_id;
+    }
+
     private Long topic_id;
     private String title;
     private Boolean status;
@@ -23,25 +35,42 @@ public class Poll {
     @JoinColumn(name = "pollId", referencedColumnName = "id")
     private List<Rating> ratings;
 
+    @Transient
+    private String topicName;
+
+    public Long getId() {
+        return id;
+    }
+
     public Boolean getStatus() {
-        return status;
-    }
-
-    public long getTopic_id() {
-        return topic_id;
-    }
-
-    public void setTopic_id(long topic_id) {
-        this.topic_id = topic_id;
-    }
-
-    public boolean isStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void copyFrom(Poll newPoll) {
+        this.topic_id = newPoll.topic_id;
+        this.dateOfClosing = newPoll.dateOfClosing;
+        this.dateOfCreation = newPoll.dateOfCreation;
+        this.status = newPoll.status;
+    }
+
+    public String getTopicName() {
+
+        return topicName;
+    }
+
+    public void setTopicName(String topicName) {
+
+        this.topicName = topicName;
+    }
+
 
     public Date getDateOfCreation() {
         return dateOfCreation;
@@ -65,10 +94,6 @@ public class Poll {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public List<Comment> getComments() {
