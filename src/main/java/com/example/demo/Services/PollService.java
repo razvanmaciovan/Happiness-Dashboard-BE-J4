@@ -43,6 +43,8 @@ public class PollService {
 
     /* Adds a Poll to the DB */
     public void addPoll(Poll poll) {
+        poll.setDateOfCreation(pollRepo.getDBTimestamp());
+        poll.setDateOfClosing(pollRepo.getDateOfClosing(poll.getDaysTillClosing()));
         pollRepo.save(poll);
     }
 
