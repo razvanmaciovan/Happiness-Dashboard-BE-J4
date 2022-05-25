@@ -24,18 +24,19 @@ public class PollService {
 
     /* Returns a List of Polls from the DB */
     public List<Poll> getAll() {
-        return pollRepo.findAll();
+        List<Poll> list = pollRepo.findAll();
+
+        for ( Poll poll : list)
+            updatePollTopicName(poll);
+
+        return list;
     }
 
     /* Returns an Optional containing the found Poll with the given ID or an Empty one */
     public Optional<Poll> getPoll(Long id) {
         Optional<Poll> poll = pollRepo.findById(id);
 
-        Topic topic = topicService.getTopic(poll.get().getTopic_id()).get();
-
-        System.out.println(topic.getName());
-
-        poll.get().setTopicName(topic.getName());
+        updatePollTopicName(poll.get());
 
         return poll;
     }
@@ -71,6 +72,19 @@ public class PollService {
     }
 
     public List<Poll> getMostRecentPolls(int amount) {
-        return pollRepo.findAllByOrderByIdDesc(amount);
+        List<Poll> list = pollRepo.findAll();
+
+        for ( Poll poll : list)
+            updatePollTopicName(poll);
+
+        return list;
+    }
+
+    private void updatePollTopicName(Poll poll) {
+
+        Topic topic = topicService.getTopic(poll.getTopic_id()).get();
+
+        poll.setTopicName(topic.getName());
+
     }
 }

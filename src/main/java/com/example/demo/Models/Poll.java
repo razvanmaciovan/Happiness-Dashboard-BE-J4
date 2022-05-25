@@ -71,7 +71,6 @@ public class Poll {
         this.topicName = topicName;
     }
 
-
     public Date getDateOfCreation() {
         return dateOfCreation;
     }
