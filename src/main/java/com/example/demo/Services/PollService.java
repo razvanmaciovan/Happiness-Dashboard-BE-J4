@@ -72,7 +72,7 @@ public class PollService {
     }
 
     public List<Poll> getMostRecentPolls(int amount) {
-        List<Poll> list = pollRepo.findAll();
+        List<Poll> list = pollRepo.findAllByOrderByIdDesc(amount);
 
         for ( Poll poll : list)
             updatePollTopicName(poll);
