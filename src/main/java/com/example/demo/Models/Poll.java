@@ -22,6 +22,8 @@ public class Poll {
     @OneToMany(targetEntity = Rating.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "pollId", referencedColumnName = "id")
     private List<Rating> ratings;
+    @Transient
+    private Integer daysTillClosing;
 
     public Boolean getStatus() {
         return status;
@@ -77,5 +79,13 @@ public class Poll {
 
     public List<Rating> getRatings() {
         return ratings;
+    }
+
+    public Integer getDaysTillClosing() {
+        return daysTillClosing;
+    }
+
+    public void setDaysTillClosing(Integer daysTillClosing) {
+        this.daysTillClosing = daysTillClosing;
     }
 }
