@@ -74,6 +74,7 @@ public class PollController {
                     description = "Poll was added successfully!")
     })
     @PostMapping()
+
     public ResponseEntity<String> addPoll(@RequestBody Poll poll) {
         pollService.addPoll(poll);
         return new ResponseEntity<>("Poll successfully added!", CREATED);
