@@ -95,11 +95,11 @@ public class Poll {
         this.title = title;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public List<Rating> getRatings() {
-        return ratings;
-    }
+//    public List<Comment> getComments() {
+//        return comments;
+//    }
+//
+//    public List<Rating> getRatings() {
+//        return ratings;
+//    }
 }
