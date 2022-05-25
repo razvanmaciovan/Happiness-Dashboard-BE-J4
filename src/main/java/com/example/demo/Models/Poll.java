@@ -1,6 +1,8 @@
 package com.example.demo.Models;
 
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -9,18 +11,23 @@ import java.util.List;
 public class Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(required = false,hidden = true)
     private Long id;
     private Long topic_id;
     private String title;
     private Boolean status;
     @Column(nullable = false)
+    @ApiModelProperty(required = false,hidden = true)
     private Date dateOfCreation;
+    @ApiModelProperty(required = false,hidden = true)
     private Date dateOfClosing;
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "pollId", referencedColumnName = "id")
+    @ApiModelProperty(required = false,hidden = true)
     private List<Comment> comments;
     @OneToMany(targetEntity = Rating.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "pollId", referencedColumnName = "id")
+    @ApiModelProperty(required = false,hidden = true)
     private List<Rating> ratings;
     @Transient
     private Integer daysTillClosing;
