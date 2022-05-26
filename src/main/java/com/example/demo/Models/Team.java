@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@SuppressWarnings("unused")
 @Entity
 public class Team {
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

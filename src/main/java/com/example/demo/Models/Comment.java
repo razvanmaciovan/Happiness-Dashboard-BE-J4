@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
 
+@SuppressWarnings("unused")
 @Entity
 public class Comment {
     @Id

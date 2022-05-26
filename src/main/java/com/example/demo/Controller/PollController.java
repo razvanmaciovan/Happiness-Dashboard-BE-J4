@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
 
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/api/poll")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -74,6 +75,7 @@ public class PollController {
                     description = "Poll was added successfully!")
     })
     @PostMapping()
+
     public ResponseEntity<String> addPoll(@RequestBody Poll poll) {
         pollService.addPoll(poll);
         return new ResponseEntity<>("Poll successfully added!", CREATED);
