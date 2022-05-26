@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
 
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/api/poll")
 @CrossOrigin(origins = "http://localhost:4200")

@@ -14,7 +14,7 @@ import java.util.Optional;
 public class PollService {
 
     private final PollRepo pollRepo;
-    private TopicService topicService;
+    private final TopicService topicService;
 
     @Autowired
     public PollService(PollRepo pollRepo, TopicService topicService) {
@@ -26,7 +26,7 @@ public class PollService {
     public List<Poll> getAll() {
         List<Poll> list = pollRepo.findAll();
 
-        for ( Poll poll : list)
+        for (Poll poll : list)
             updatePollTopicName(poll);
 
         return list;
@@ -35,6 +35,9 @@ public class PollService {
     /* Returns an Optional containing the found Poll with the given ID or an Empty one */
     public Optional<Poll> getPoll(Long id) {
         Optional<Poll> poll = pollRepo.findById(id);
+
+        if (poll.isEmpty())
+            return Optional.empty();
 
         updatePollTopicName(poll.get());
 
@@ -70,13 +73,14 @@ public class PollService {
 
     /* Helper Method that updates a Poll */
     private void updatePollInfo(@NotNull Poll originalPoll, @NotNull Poll newPoll) {
-        originalPoll.copyFrom(newPoll);
+        originalPoll.update(newPoll);
+        pollRepo.updateDateOfClosing(Math.toIntExact(originalPoll.getId()), newPoll.getDaysTillClosing());
     }
 
     public List<Poll> getMostRecentPolls(int amount) {
         List<Poll> list = pollRepo.findAllByOrderByIdDesc(amount);
 
-        for ( Poll poll : list)
+        for (Poll poll : list)
             updatePollTopicName(poll);
 
         return list;
@@ -84,9 +88,12 @@ public class PollService {
 
     private void updatePollTopicName(Poll poll) {
 
-        Topic topic = topicService.getTopic(poll.getTopic_id()).get();
+        Optional<Topic> topic = topicService.getTopic(poll.getTopic_id());
 
-        poll.setTopicName(topic.getName());
+        if (topic.isEmpty())
+            return;
+
+        poll.setTopicName(topic.get().getName());
 
     }
 }

@@ -1,19 +1,58 @@
 package com.example.demo.Models;
 
 
-import com.example.demo.Services.TopicService;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+
+@SuppressWarnings("unused")
 @Entity
 public class Poll {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(required = false,hidden = true)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long topic_id;
+
+    private String title;
+
+    private Boolean status;
+
+    @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date dateOfCreation;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date dateOfClosing;
+
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pollId", referencedColumnName = "id")
+    @ApiModelProperty(hidden = true)
+    private List<Comment> comments;
+
+    @OneToMany(targetEntity = Rating.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pollId", referencedColumnName = "id")
+    @ApiModelProperty(hidden = true)
+    private List<Rating> ratings;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Integer daysTillClosing;
+
+    @Transient
+    @ApiModelProperty(hidden = true)
+    private String topicName;
+
+    public Long getId() {
+        return id;
+    }
 
     public Long getTopic_id() {
         return topic_id;
@@ -23,49 +62,16 @@ public class Poll {
         this.topic_id = topic_id;
     }
 
-    private Long topic_id;
-    private String title;
-    private Boolean status;
-    @Column(nullable = false)
-    @ApiModelProperty(required = false,hidden = true)
-    private Date dateOfCreation;
-    @ApiModelProperty(required = false,hidden = true)
-    private Date dateOfClosing;
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "pollId", referencedColumnName = "id")
-    @ApiModelProperty(required = false,hidden = true)
-    private List<Comment> comments;
-    @OneToMany(targetEntity = Rating.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "pollId", referencedColumnName = "id")
-    @ApiModelProperty(required = false,hidden = true)
-    private List<Rating> ratings;
-    @Transient
-    private Integer daysTillClosing;
-
-    @Transient
-    private String topicName;
-
-    public Long getId() {
-        return id;
-    }
-
     public Boolean getStatus() {
         return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     public boolean isStatus() {
         return status;
     }
 
-    public void copyFrom(Poll newPoll) {
-        this.topic_id = newPoll.topic_id;
-        this.dateOfClosing = newPoll.dateOfClosing;
-        this.dateOfCreation = newPoll.dateOfCreation;
-        this.status = newPoll.status;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getTopicName() {
@@ -102,6 +108,27 @@ public class Poll {
         this.title = title;
     }
 
+    public Integer getDaysTillClosing() {
+        return daysTillClosing;
+
+    }
+
+    public void setDaysTillClosing(Integer daysTillClosing) {
+        this.daysTillClosing = daysTillClosing;
+    }
+
+    // copies only field that are not null
+    public void update(Poll newPoll) {
+        this.daysTillClosing = newPoll.daysTillClosing;
+        this.status = newPoll.status;
+        this.title = newPoll.title;
+        this.topic_id = newPoll.topic_id;
+
+
+
+    }
+
+//    NOT IMPLEMENTED YET
 //    public List<Comment> getComments() {
 //        return comments;
 //    }
@@ -110,11 +137,4 @@ public class Poll {
 //        return ratings;
 //    }
 
-    public Integer getDaysTillClosing() {
-        return daysTillClosing;
-    }
-
-    public void setDaysTillClosing(Integer daysTillClosing) {
-        this.daysTillClosing = daysTillClosing;
-    }
 }

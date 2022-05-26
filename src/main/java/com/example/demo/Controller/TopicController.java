@@ -15,6 +15,7 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/api/topic")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -25,6 +26,22 @@ public class TopicController {
     @Autowired
     public TopicController(TopicService topicService) {
         this.topicService = topicService;
+    }
+
+    @Operation(
+            summary = "Adds an Topic!",
+            description = "This function adds an Topics inside the database.\n\n" +
+                    "__Usage:__ localhost:8080/api/topic/add"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Topic with given ID was found and returned successfully!")
+    })
+    @PostMapping()
+    public ResponseEntity<String> addTopic(@RequestBody Topic topic) {
+        topicService.addTopic(topic);
+        return new ResponseEntity<>("Topic added successfully!", CREATED);
     }
 
     @Operation(
@@ -40,7 +57,7 @@ public class TopicController {
                     responseCode = "404",
                     description = "No topic with such ID!")
     })
-    @GetMapping(path = "/get/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<Topic> getTopic(@PathVariable Long id) {
         Optional<Topic> foundTopic = topicService.getTopic(id);
         return foundTopic
@@ -59,46 +76,9 @@ public class TopicController {
                     responseCode = "200",
                     description = "Topic with given ID was found and returned successfully!")
     })
-    @GetMapping(path = "/get/all", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
     public List<Topic> getAll() {
         return topicService.getAll();
-    }
-
-    @Operation(
-            summary = "Adds an Topic!",
-            description = "This function adds an Topics inside the database.\n\n" +
-                    "__Usage:__ localhost:8080/api/topic/add"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "Topic with given ID was found and returned successfully!")
-    })
-    @PostMapping(path = "/add")
-    public ResponseEntity<String> addTopic(@RequestBody Topic topic) {
-        topicService.addTopic(topic);
-        return new ResponseEntity<>("Topic added successfully!", CREATED);
-    }
-
-    @Operation(
-            summary = "Deletes an Topic!",
-            description = "This function deletes an Topics with given ID from the database.\n\n" +
-                    "__Usage:__ localhost:8080/api/topic/delete/id"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Topic with given ID was found and deleted successfully!"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Topic with given ID was not found!")
-    })
-    @DeleteMapping(path = "/delete/{id}")
-    public ResponseEntity<String> deleteTopic(@PathVariable Long id) {
-        boolean deletedSuccessfully = topicService.deleteTopic(id);
-        if (deletedSuccessfully)
-            return new ResponseEntity<>("Topic with ID " + id + " was deleted successfully!", OK);
-        return new ResponseEntity<>("Topic with given ID was not found!", NOT_FOUND);
     }
 
     @Operation(
@@ -120,6 +100,27 @@ public class TopicController {
         return foundTopic
                 .map(value -> new ResponseEntity<>(value, OK))
                 .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
+    }
+
+    @Operation(
+            summary = "Deletes an Topic!",
+            description = "This function deletes an Topics with given ID from the database.\n\n" +
+                    "__Usage:__ localhost:8080/api/topic/delete/id"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Topic with given ID was found and deleted successfully!"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Topic with given ID was not found!")
+    })
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<String> deleteTopic(@PathVariable Long id) {
+        boolean deletedSuccessfully = topicService.deleteTopic(id);
+        if (deletedSuccessfully)
+            return new ResponseEntity<>("Topic with ID " + id + " was deleted successfully!", OK);
+        return new ResponseEntity<>("Topic with given ID was not found!", NOT_FOUND);
     }
 
 }
