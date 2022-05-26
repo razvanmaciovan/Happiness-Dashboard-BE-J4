@@ -3,6 +3,7 @@ package com.example.demo.Models;
 import javax.persistence.*;
 import java.util.Date;
 
+@SuppressWarnings("unused")
 @Entity
 public class Rating {
     @Id
@@ -14,7 +15,6 @@ public class Rating {
     private User user;
     @Column
     private int grade;
-
     private Date timeStamp;
 
     public long getPollId() {

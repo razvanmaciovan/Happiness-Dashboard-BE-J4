@@ -7,6 +7,8 @@ import java.util.Set;
 @SuppressWarnings("unused")
 @Entity
 public class User {
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
+    private final Set<Team> teams = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,9 +16,6 @@ public class User {
     private String username;
     @Column(nullable = false)
     private String password;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
-    private final Set<Team> teams = new HashSet<>();
 
     public String getUsername() {
         return username;
