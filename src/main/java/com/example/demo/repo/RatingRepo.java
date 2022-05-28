@@ -4,6 +4,7 @@ import com.example.demo.Models.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,8 @@ public interface RatingRepo extends JpaRepository<Rating, Long> {
 
     @Query(value = "SELECT grade FROM rating WHERE poll_id = :pollId", nativeQuery = true)
     List<Integer> getListOfRatings(long pollId);
-
-
+    
+    @Query(value = "SELECT sysdate()", nativeQuery = true)
+    Date getDBTimestamp();
 
 }

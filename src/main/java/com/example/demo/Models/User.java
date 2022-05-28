@@ -1,14 +1,10 @@
 package com.example.demo.Models;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @SuppressWarnings("unused")
 @Entity
 public class User {
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
-    private final Set<Team> teams = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,5 +31,14 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                ", id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

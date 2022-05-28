@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Models.Rating;
 import com.example.demo.Services.RatingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -75,6 +76,16 @@ public class RatingController {
         return avgRating == -1
                 ? new ResponseEntity<>(avgRating, NOT_FOUND)
                 : new ResponseEntity<>(avgRating, OK);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Boolean> addRating(@RequestBody Rating rating) {
+
+        boolean addedSuccessfully = ratingService.addRating(rating);
+
+        return addedSuccessfully
+                ? new ResponseEntity<>(null, OK)
+                : new ResponseEntity<>(false, NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")

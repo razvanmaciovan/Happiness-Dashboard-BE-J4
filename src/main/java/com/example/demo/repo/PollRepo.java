@@ -22,7 +22,7 @@ public interface PollRepo extends JpaRepository<Poll, Long> {
 
     @Modifying
     @Transactional
-    @Query(value =  "UPDATE poll SET date_of_closing=date_of_creation+INTERVAL :daysTillClose DAY WHERE id=:pID ;", nativeQuery = true)
+    @Query(value = "UPDATE poll SET date_of_closing=date_of_creation+INTERVAL :daysTillClose DAY WHERE id=:pID ;", nativeQuery = true)
     void updateDateOfClosing(@Param("pID") Integer pID, @Param("daysTillClose") Integer daysTillClose);
 
 }
