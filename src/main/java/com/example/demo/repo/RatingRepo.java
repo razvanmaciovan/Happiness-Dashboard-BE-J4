@@ -14,7 +14,7 @@ public interface RatingRepo extends JpaRepository<Rating, Long> {
     double getPollRating(long id);
 
     @Query(value = "SELECT user_id FROM rating WHERE user_id = :userId AND poll_id = :pollId", nativeQuery = true)
-    Optional<Long> checkIfUserRated(long userId, long pollId);
+    Optional<Long> checkIfUserRated(long pollId, long userId);
 
     @Query(value = "SELECT sysdate()", nativeQuery = true)
     Date getDBTimestamp();
