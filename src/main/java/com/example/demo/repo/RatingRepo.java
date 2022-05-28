@@ -19,9 +19,7 @@ public interface RatingRepo extends JpaRepository<Rating, Long> {
 
     @Query(value = "SELECT grade FROM rating WHERE poll_id = :pollId", nativeQuery = true)
     List<Integer> getListOfRatings(long pollId);
-
-
-
+    
     @Query(value = "SELECT sysdate()", nativeQuery = true)
     Date getDBTimestamp();
 
