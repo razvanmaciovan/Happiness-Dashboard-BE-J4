@@ -40,8 +40,8 @@ public class RatingController {
                     description = "User already rated on this Poll")
     })
     @GetMapping("/{pollId}/{userId}")
-    public ResponseEntity<Boolean> checkIfUserRated(@PathVariable long pollId, @PathVariable long userId) {
-        return ratingService.checkIfUserRated(pollId, userId)
+    public ResponseEntity<Boolean> checkIfUserRated(@PathVariable long userId, @PathVariable long pollId) {
+        return ratingService.checkIfUserRated(userId, pollId)
                 ? new ResponseEntity<>(true, OK)
                 : new ResponseEntity<>(false, BAD_REQUEST);
     }

@@ -18,8 +18,8 @@ public class RatingService {
     }
 
     /* Function returns True if a User never rated on a Poll before, false otherwise */
-    public boolean checkIfUserRated(long pollId, long userId) {
-        Optional<Long> optionalLong = ratingRepo.checkIfUserRated(pollId, userId);
+    public boolean checkIfUserRated(long userId, long pollId) {
+        Optional<Long> optionalLong = ratingRepo.checkIfUserRated(userId, pollId);
         return optionalLong.isPresent();
     }
 
