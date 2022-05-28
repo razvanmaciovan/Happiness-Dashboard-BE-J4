@@ -125,7 +125,6 @@ public class Poll {
         this.topic_id = newPoll.topic_id;
 
 
-
     }
 
 //    NOT IMPLEMENTED YET

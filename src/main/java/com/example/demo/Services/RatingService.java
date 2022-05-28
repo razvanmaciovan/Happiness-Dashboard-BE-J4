@@ -1,8 +1,6 @@
 package com.example.demo.Services;
 
-import com.example.demo.Models.Poll;
 import com.example.demo.Models.Rating;
-import com.example.demo.repo.PollRepo;
 import com.example.demo.repo.RatingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +45,7 @@ public class RatingService {
 
         rating.setTimeStamp(ratingRepo.getDBTimestamp());
 
-        System.out.println(rating.toString());
+        System.out.println(rating);
 
         ratingRepo.save(rating);
 

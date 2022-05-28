@@ -1,8 +1,5 @@
 package com.example.demo.Models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
-
 import javax.persistence.*;
 import java.util.Date;
 
