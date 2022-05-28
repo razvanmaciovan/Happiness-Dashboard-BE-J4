@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
@@ -41,6 +44,16 @@ public class RatingController {
                 ? new ResponseEntity<>(true, OK)
                 : new ResponseEntity<>(false, BAD_REQUEST);
     }
+
+    @GetMapping({"/{pollId}"})
+    public Map<Integer, Integer> getListOfRatings(@PathVariable long pollId) {
+        Map<Integer, Integer> dictOfRatings = new HashMap<>();
+        ratingService.getListOfRatings(pollId).forEach(rating -> {
+            dictOfRatings.put(rating, !dictOfRatings.containsKey(rating) ? 1 : dictOfRatings.get(rating) + 1);
+        });
+        return dictOfRatings;
+    }
+
 
     @Operation(
             summary = "Returns the rating of a poll!",
