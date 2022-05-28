@@ -1,5 +1,8 @@
 package com.example.demo.Models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,6 +13,7 @@ public class Rating {
     @GeneratedValue
     private long id;
     private long pollId;
+    @ApiModelProperty(allowableValues = "id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     private User user;
@@ -39,5 +43,16 @@ public class Rating {
 
     public void setGrade(int grade) {
         this.grade = grade;
+    }
+
+    @Override
+    public String toString() {
+        return "Rating{" +
+                "id=" + id +
+                ", pollId=" + pollId +
+                ", user=" + user.toString() +
+                ", grade=" + grade +
+                ", timeStamp=" + timeStamp +
+                '}';
     }
 }

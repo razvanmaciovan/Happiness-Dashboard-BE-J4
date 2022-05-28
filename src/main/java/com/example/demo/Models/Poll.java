@@ -47,7 +47,7 @@ public class Poll {
     private Integer daysTillClosing;
 
     @Transient
-    @ApiModelProperty(hidden = true)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String topicName;
 
     public Long getId() {
