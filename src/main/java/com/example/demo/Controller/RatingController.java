@@ -47,9 +47,10 @@ public class RatingController {
 
     @GetMapping({"/{pollId}"})
     public Map<Integer, Integer> getListOfRatings(@PathVariable long pollId) {
-        Map<Integer, Integer> dictOfRatings = new HashMap<>();
+        Map<Integer, Integer> dictOfRatings = new HashMap<>(Map.of(1, 0, 2, 0, 3, 0,
+                4, 0, 5, 0));
         ratingService.getListOfRatings(pollId).forEach(rating -> {
-            dictOfRatings.put(rating, !dictOfRatings.containsKey(rating) ? 1 : dictOfRatings.get(rating) + 1);
+            dictOfRatings.put(rating, dictOfRatings.get(rating) == 0 ? 1 : dictOfRatings.get(rating) + 1);
         });
         return dictOfRatings;
     }
