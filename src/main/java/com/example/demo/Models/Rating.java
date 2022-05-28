@@ -13,12 +13,12 @@ public class Rating {
     @GeneratedValue
     private long id;
     private long pollId;
-    @ApiModelProperty(allowableValues = "id")
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     private User user;
     @Column
     private int grade;
+
     private Date timeStamp;
 
     public long getPollId() {
@@ -45,6 +45,14 @@ public class Rating {
         this.grade = grade;
     }
 
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
     @Override
     public String toString() {
         return "Rating{" +
@@ -55,4 +63,5 @@ public class Rating {
                 ", timeStamp=" + timeStamp +
                 '}';
     }
+
 }

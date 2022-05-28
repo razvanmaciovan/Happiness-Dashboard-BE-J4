@@ -67,9 +67,11 @@ public class RatingController {
     @PostMapping()
     public ResponseEntity<Boolean> addRating(@RequestBody Rating rating) {
 
-        System.out.println(rating.toString());
+        boolean addedSuccessfully = ratingService.addRating(rating);
 
-        return new ResponseEntity<>(null, OK);
+        return addedSuccessfully
+                ? new ResponseEntity<>(null, OK)
+                : new ResponseEntity<>(false, NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
