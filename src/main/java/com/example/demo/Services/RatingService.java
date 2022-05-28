@@ -46,4 +46,15 @@ public class RatingService {
 //        return -1;
     }
 
+    public boolean addRating(Rating rating) {
+
+        rating.setTimeStamp(ratingRepo.getDBTimestamp());
+
+        System.out.println(rating);
+
+        ratingRepo.save(rating);
+
+        return true;
+    }
+
 }
